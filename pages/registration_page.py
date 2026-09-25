@@ -19,9 +19,8 @@ class RegistrationPage(BasePage):
     REGISTER_BUTTON = (By.CSS_SELECTOR, "input[value='Register']")
     SUCCESS_MESSAGE = (By.CSS_SELECTOR, "#rightPanel p")
 
-
-    def register(self, first_name, last_name, address, city, state,
-                    zip_code, phone, ssn, username, password):
+    def register(self, *, first_name, last_name, address, city, state,
+                 zip_code, phone, ssn, username, password):
         self.type(self.FIRST_NAME, first_name)
         self.type(self.LAST_NAME, last_name)
         self.type(self.ADDRESS, address)
@@ -36,7 +35,7 @@ class RegistrationPage(BasePage):
         self.click(self.REGISTER_BUTTON)
 
     def get_success_message(self):
-            WebDriverWait(self.driver, 20).until(
-                EC.text_to_be_present_in_element(self.SUCCESS_MESSAGE, "successfully")
-            )
-            return self.find(self.SUCCESS_MESSAGE).text
+        WebDriverWait(self.driver, 20).until(
+            EC.text_to_be_present_in_element(self.SUCCESS_MESSAGE, "successfully")
+        )
+        return self.find(self.SUCCESS_MESSAGE).text
