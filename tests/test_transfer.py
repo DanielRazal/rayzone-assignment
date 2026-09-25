@@ -55,5 +55,5 @@ def test_transfer_and_validate(registered_user):
     find_transactions_page.find_by_date(today)
     results = find_transactions_page.get_results_text()
 
-    assert all(f"${transfer_amount:.2f}" in row for row in results)
-    assert all(today in row for row in results)
+    assert all(f"${transfer_amount:.2f}" in row for row in results), f"Amount not found in all rows: {results}"
+    assert all(today in row for row in results), f"Date not found in all rows: {results}"
