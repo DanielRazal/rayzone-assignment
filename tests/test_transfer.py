@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 from dotenv import load_dotenv
 from pages.accounts_overview_page import AccountsOverviewPage
+from pages.find_transactions_page import FindTransactionsPage
 from tests.api_helpers import (
     build_authenticated_session,
     find_transactions_by_date,
@@ -48,3 +49,11 @@ def test_transfer_and_validate(registered_user):
 
     transaction_date = datetime.fromtimestamp(transaction["date"] / 1000).date()
     assert transaction_date == date.today()
+
+    find_transactions_page = FindTransactionsPage(driver)
+    find_transactions_page.open_via_menu()
+    find_transactions_page.find_by_date(today)
+    results = find_transactions_page.get_results_text()
+
+    assert all(f"${transfer_amount:.2f}" in row for row in results)
+    assert all(today in row for row in results)
