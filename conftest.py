@@ -18,6 +18,7 @@ def driver():
     driver.quit()
 
 
+@pytest.fixture
 def create_new_account(driver):
     base_url = os.getenv("BASE_URL")
     base_username = os.getenv("TEST_USERNAME")
@@ -46,7 +47,6 @@ def create_new_account(driver):
 
 
 @pytest.fixture
-def registered_user(driver):
-    registration_page = create_new_account(driver)
-    registration_page.get_success_message()
+def registered_user(driver, create_new_account):
+    create_new_account.get_success_message()
     return driver

@@ -1,6 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 
 
@@ -19,8 +17,5 @@ class FindTransactionsPage(BasePage):
         self.click(self.FIND_BY_DATE_BUTTON)
 
     def get_results_text(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(self.RESULTS_ROWS)
-        )
-        rows = self.driver.find_elements(*self.RESULTS_ROWS)
+        rows = self.find_all(self.RESULTS_ROWS)
         return [row.text for row in rows]

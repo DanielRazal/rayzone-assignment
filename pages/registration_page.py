@@ -1,10 +1,9 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 
 class RegistrationPage(BasePage):
-    
+
     FIRST_NAME = (By.ID, "customer.firstName")
     LAST_NAME = (By.ID, "customer.lastName")
     ADDRESS = (By.ID, "customer.address.street")
@@ -35,7 +34,5 @@ class RegistrationPage(BasePage):
         self.click(self.REGISTER_BUTTON)
 
     def get_success_message(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.text_to_be_present_in_element(self.SUCCESS_MESSAGE, "successfully")
-        )
+        self.wait_for_text(self.SUCCESS_MESSAGE, "successfully")
         return self.find(self.SUCCESS_MESSAGE).text
